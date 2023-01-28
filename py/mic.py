@@ -114,7 +114,7 @@ class WirelessMic(ChannelDevice):
         self.quality = int(quality)
 
         def set_power_lock(self, power_lock):
-         if power_lock in ['OFF', 'UNKN', 'UNKNOWN']:
+         if power_lock in ['OFF', 'UNKN', 'UNKNOWN', 'NONE']:
              self.power_lock = 'OFF'
          elif  power_lock in ['ON', 'ALL']:
              self.power_lock = 'ON'
