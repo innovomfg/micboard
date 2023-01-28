@@ -1,17 +1,21 @@
-FROM python:3.9.14-slim-buster
-LABEL MAINTAINER Karl Swanson <karlcswanson@gmail.com>
+# syntax=docker/dockerfile:1
+FROM node:17-alpine AS micboard_frontend
+WORKDIR /home/node/app
+COPY . .
+RUN npm install
+RUN npm run build
 
-RUN apt-get update -y
-RUN apt-get install git curl make build-essential -y
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install nodejs -y
-RUN npm install yarn -g
+FROM python:3 as micboard_server
+
+LABEL org.opencontainers.image.authors="karl@micboard.io"
 
 WORKDIR /usr/src/app
-COPY . .
 
-RUN yarn install --prod
+COPY . .
+COPY --from=micboard_frontend /home/node/app/static /usr/src/app/static/
+
 RUN pip3 install -r py/requirements.txt
 
-RUN yarn build
-CMD ["python", "py/micboard.py"]
+EXPOSE 8058
+
+CMD ["python3", "py/micboard.py"]
