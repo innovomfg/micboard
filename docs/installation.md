@@ -8,7 +8,7 @@ Run docker the docker-compose.yaml file
 ```
 $ mkdir -p ~/docker/micboard
 $ cd ~/docker/micboard/
-$ curl -O https://raw.githubusercontent.com/karlcswanson/micboard/master/docker-compose.yaml
+$ curl -O https://raw.githubusercontent.com/treycarey/micboard/master/docker-compose.yaml
 $ docker compose up
 ```
 
@@ -24,7 +24,7 @@ $ sudo apt-get install nodejs
 
 Download micboard
 ```
-$ git clone https://github.com/karlcswanson/micboard.git
+$ git clone https://github.com/treycarey/micboard.git
 ```
 
 Install micboard software dependencies via npm and pip
