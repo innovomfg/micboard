@@ -142,6 +142,11 @@ canvas.slotgraph {
   color: var(--color-green);
 }
 
+.powerlock{
+  position: absolute;
+  bottom: 80px;
+  left: 5px;
+}
 
 .quality {
   position: absolute;
@@ -452,6 +457,11 @@ canvas.slotgraph {
 
   .runtime {
     bottom: 75px;
+    left: 5px;
+  }
+
+  .powerlock {
+    bottom: 25px;
     left: 5px;
   }
 
