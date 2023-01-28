@@ -1,6 +1,5 @@
-MAINTAINER Karl Swanson <karlcswanson@gmail.com>
-
 FROM python:3.9.14-slim-buster
+LABEL MAINTAINER Karl Swanson <karlcswanson@gmail.com>
 
 RUN apt-get update -y
 RUN apt-get install git curl make build-essential -y
@@ -9,7 +8,6 @@ RUN apt-get install nodejs -y
 RUN npm install yarn -g
 
 WORKDIR /usr/src/app
-
 COPY . .
 
 RUN yarn install --prod
