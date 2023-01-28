@@ -24,7 +24,7 @@ $ sudo apt-get install nodejs
 
 Download micboard
 ```
-$ git clone https://github.com/karlcswanson/micboard.git
+$ git clone https://github.com/treycarey/micboard.git
 ```
 
 Install micboard software dependencies via npm and pip
