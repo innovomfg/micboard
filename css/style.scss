@@ -149,9 +149,9 @@ canvas.slotgraph {
   position: absolute;
   bottom: 15px;
   left: 5px;
-  //color: #587B7F;
+  // color: #587B7F;
   color: #DA8F4A;
-  //color: var(--color-yellow);
+  // color: var(--color-yellow-dark);
 }
 
 .quality {
@@ -262,7 +262,7 @@ canvas.slotgraph {
 }
 
 #save-box .row,
- #paste-box .row {
+#paste-box .row {
   padding-top: 15px;
 }
 
@@ -655,12 +655,12 @@ canvas.slotgraph {
   padding-top: 4em;
 }
 
-.message-board{
+.message-board {
   display: none;
   background-color: var(--color-blue);
   color: var(--color-white);
-  margin-left: -15px;
-  margin-right: -15px;
+  padding-left: 50px !important;
+  padding-top: 75px !important;
   padding: 3em;
 }
 
@@ -682,8 +682,8 @@ canvas.slotgraph {
   background-color: var(--color-black);
   padding: .75rem 1.25rem;
   border: 1px solid var(--color-gray);
-  margin-left: -5px;
-  margin-right: -5px;
+  // margin-left: -5px;
+  // margin-right: -5px;
   border-radius: 12px 12px 0 0;
 }
 
@@ -696,8 +696,8 @@ canvas.slotgraph {
   background-color: var(--color-black);
   padding: .75rem 1.25rem;
   border: 1px solid var(--color-gray);
-  margin-left: -5px;
-  margin-right: -5px;
+  // margin-left: -5px;
+  // margin-right: -5px;
   border-radius: 0 0 12px 12px;
 }
 
@@ -823,7 +823,7 @@ a:link, a:visited, a:hover, a:active {
 
 #eslotlist {
   height: 400px;
-  overflow: scroll;
+  // overflow-y: scroll;
 }
 
 #eslotlist .col-sm {
@@ -867,7 +867,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 #hud {
-  display: none;
+  // display: none;
   position: absolute;
   right: 25px;
   bottom: 25px;

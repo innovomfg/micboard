@@ -33,7 +33,7 @@
 
   </head>
   <body>
-    <div id="hud" class="container">
+    <div id="hud" class="container collapse">
       <div class="row">
         <div class="col-4 keyboard-guide">
           <h2 class="text-center">Keyboard Shortcuts</h2>
@@ -113,13 +113,14 @@
 
         </div>
       </div>
-
-      <button id="hud-button" type="button" class="btn btn-success btn-lg btn-block">Close</button>
+      <div class="d-grid gap-2">
+        <button id="hud-button" type="button" class="btn btn-success btn-lg" data-bs-toggle="collapse" data-bs-target="#hud">Close</button>
+      </div>
 
     </div>
     <div class="container-fluid fullHeight deskmode" id="container">
 
-      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div id="qr-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
             <div class="qr text-center">
@@ -148,10 +149,11 @@
               <input type="checkbox" id="chartCheck">
             </div>
           </div>
-
-          <button type="button" class="btn btn-success btn-lg btn-block" id="editorSave">Save</button>
-          <button type="button" class="btn btn-warning btn-lg btn-block" id="editorClose">Close</button>
-          <button type="button" class="btn btn-danger btn-lg btn-block" id="editorClear">Clear</button>
+          <div class="d-grid gap-1">
+            <button type="button" class="btn btn-success btn-lg" id="editorSave">Save</button>
+            <button type="button" class="btn btn-warning btn-lg" id="editorClose">Close</button>
+            <button type="button" class="btn btn-danger btn-lg" id="editorClear">Clear</button>
+          </div>
         </div>
       </div>
       <div id="micboard" class="row above-mid bg-std elinfo11 drag-container">
@@ -175,8 +177,8 @@
             <div class="config-footer">
               <div class="row">
 
-                <div class="col">
-                  <button id="add-discovered" class="btn btn-block btn-danger">Add All Discovered Devices</button>
+                <div class="col d-grid gap-2">
+                  <button id="add-discovered" class="btn btn-danger">Add All Discovered Devices</button>
                 </div>
 
               </div>
@@ -191,14 +193,14 @@
             <div class="config-footer">
               <div class="row">
 
-                <div class="col">
-                  <button id="clear-config" class="btn btn-block btn-danger">Clear</button>
+                <div class="col d-grid gap-2">
+                  <button id="clear-config" class="btn btn-danger">Clear</button>
                 </div>
-                <div class="col">
-                  <button id="add-config-row" class="btn btn-block btn-warning">Add Row</button>
+                <div class="col d-grid gap-2">
+                  <button id="add-config-row" class="btn btn-warning">Add Row</button>
                 </div>
-                <div class="col">
-                  <button id="save" class="btn btn-block btn-success">Save</button>
+                <div class="col d-grid gap-2">
+                  <button id="save" class="btn btn-success">Save</button>
                 </div>
 
               </div>
@@ -230,7 +232,7 @@
                 <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-8">8:</a></p>
                 <p class="text-muted grp-link"><a class="nav-link preset-link" id="go-group-9">9:</a></p>
               </div>
-              <p class="text-muted"><a class="nav-link" id="go-hud">help</a></p>
+              <p class="text-muted"><a class="nav-link" id="go-hud" role="button">help</a></p>
             </div>
           </div>
           <nav class="navbar navbar-dark bg-dark py-0">
@@ -309,24 +311,24 @@
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-success btn-block" id="bulk-name-loader">Load Bulk Names</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-success" id="bulk-name-loader">Load Bulk Names</button>
           </div>
         </div>
       </div>
       <div class="col-sm" id="save-box">
         <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-success btn-block" id="slotSave">Save</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-success" id="slotSave">Save</button>
           </div>
         </div>
 
         <div class="row">
-          <div class="col">
-            <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-id">Clear IDs</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-secondary btn-warning" id="clear-id">Clear IDs</button>
           </div>
-          <div class="col">
-            <button type="button" class="btn btn-secondary btn-warning btn-block" id="clear-name">Clear Names</button>
+          <div class="col d-grid gap-2">
+            <button type="button" class="btn btn-secondary btn-warning" id="clear-name">Clear Names</button>
           </div>
         </div>
       </div>
@@ -334,20 +336,16 @@
 
     <template id="config-slot-template">
       <div class="row cfg-row">
-        <div class="col-md-1 col-4 navbar-dark align-middle cfg-row-form">
+        <div class="col col-md-1 col-4 navbar-dark align-middle cfg-row-form">
           <span class="navbar-toggler-icon"></span>
         </div>
-        <div class="col-md-2 col-4 slot-number text-center cfg-row-form"><label class="col-form-label"></label></div>
+        <div class="col col-md-2 col-4 slot-number text-center cfg-row-form"><label class="col-form-label"></label></div>
 
-        <div class="col-md-1 order-md-12 col-4 del-btn cfg-row-form">
-          <button type="button btn-block" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
-        </div>
-
-        <div class="col-md-4 col-12 cfg-row-form">
+        <div class="col col-md-4 col-12 cfg-row-form">
           <input type="text" class="form-control cfg-ip" placeholder="IP Address">
         </div>
 
-        <div class="col-md-2 col-6 cfg-row-form">
+        <div class="col col-md-2 col-6 cfg-row-form">
           <select class="form-control cfg-type">
             <option></option>
             <option>axtd</option>
@@ -359,7 +357,7 @@
           </select>
         </div>
 
-        <div class="col-md-2 col-6 cfg-row-form">
+        <div class="col col-md-2 col-6 cfg-row-form">
           <select class="form-control cfg-channel">
             <option>1</option>
             <option>2</option>
@@ -368,13 +366,12 @@
           </select>
         </div>
 
+        <div class="col col-md-1 col-12 del-btn cfg-row-form d-grid gap-2">
+          <button type="button" class="btn float-right btn-danger"><span aria-hidden="true">&times;</span></button>
+        </div>
+
       </div>
     </template>
-    <!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
     <script src="static/app.js"></script>
-    <script>if (window.module) module = window.module;</script>
-
   </body>
 </html>
