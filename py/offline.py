@@ -7,7 +7,7 @@ class OfflineDevice:
 
     def get_chan_name(self):
         chan_id = ''
-        chan_name = 'FC PRODUCTION'
+        chan_name = 'POK PRODUCTION'
 
         if 'extended_id' in self.cfg:
             chan_id = self.cfg['extended_id']
