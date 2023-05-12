@@ -24,5 +24,3 @@ static/data2.json
 static/fonts/*
 static/*.js*
 config/*
-venv/*
-static/fonts/*

@@ -1,17 +1,7 @@
 # Server Installation
-Micboard server can be installed on many different platforms.  For small and portable systems, Micboard can run on a Raspberry Pi hidden in the back of a rack.
+Micboard server can be installed on many different platforms.  For small and portable systems, Micboard can run on a Raspberry Pi hidden in the back of a rack.  Ubuntu Server is recommended for large permanent installations.
 
-## Docker (Recommended)
-Download and install Docker & Docker Compose
-
-Run docker the docker-compose.yaml file
-```
-$ mkdir -p ~/docker/micboard
-$ cd ~/docker/micboard/
-$ curl -O https://raw.githubusercontent.com/treycarey/micboard/master/docker-compose.yaml
-$ docker compose up
-```
-
+The macOS app provides a great way to try Micboard before purchasing additional hardware.
 
 ## Debian (Ubuntu & Raspberry Pi)
 Install git, python3-pip, and Node.js
@@ -24,7 +14,7 @@ $ sudo apt-get install nodejs
 
 Download micboard
 ```
-$ git clone https://github.com/treycarey/micboard.git
+$ git clone https://github.com/karlcswanson/micboard.git
 ```
 
 Install micboard software dependencies via npm and pip
@@ -50,7 +40,9 @@ $ sudo systemctl enable micboard.service
 Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 ## macOS - Desktop Application
-The Mac desktop app has been discontinued.
+Download and run micboard from the project's [GitHub Release](https://github.com/karlcswanson/micboard/releases/) page.  Add RF devices to the 'Slot Configuration' and press 'Save'.
+
+Check the [configuration](configuration.md) docs for more information on configuring micboard.
 
 
 ## macOS - From Source
@@ -92,4 +84,17 @@ Check the [configuration](configuration.md) docs for more information on configu
 Restart micboard
 ```
 $ python3 py/micboard.py
+```
+
+## Docker
+Download micboard from github
+```
+$ git clone https://github.com/karlcswanson/micboard.git
+```
+
+Build and run docker image
+```
+$ cd micboard/
+$ docker build -t micboard .
+$ docker-compose up
 ```

@@ -84,26 +84,20 @@ function initSlotEdit() {
   const t = document.getElementById('save-template').content.cloneNode(true);
   document.getElementById('micboard').appendChild(t);
 
-  document.getElementById('slotSave').addEventListener('click', () => {
+  $('#slotSave').on('click', () => {
     submitUpdate(slotValues());
   });
 
-  document.getElementById('bulk-name-loader').addEventListener('click', () => {
+  $('#bulk-name-loader').on('click', () => {
     loadBulkNames();
   });
 
-  document.getElementById('clear-id').addEventListener('click', () => {
-    const elements = document.getElementsByClassName('ext-id')
-    Array.from(elements).forEach((e) => {
-      e.value = ''
-    })
+  $('#clear-id').on('click', () => {
+    $('.ext-id:input').val('');
   });
 
-  document.getElementById('clear-name').addEventListener('click', () => {
-    const elements = document.getElementsByClassName('ext-name')
-    Array.from(elements).forEach((e) => {
-      e.value = ''
-    })
+  $('#clear-name').on('click', () => {
+    $('.ext-name:input').val('');
   });
 }
 

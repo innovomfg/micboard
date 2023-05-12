@@ -4,6 +4,7 @@ import { micboard } from './app.js';
 import { updateSlot } from './channelview.js';
 import { updateChart } from './chart-smoothie.js';
 
+
 let timers = {};
 
 const batterySample = {
@@ -47,7 +48,7 @@ const name_sample = [
   'Sharon', 'Del ACU', 'Troy', 'Matt', 'Karl', 'Anders', 'Mikey', 'Dan',
   'Jordan', 'Josue', 'Ashlee', 'Shawn c', 'James', 'Hallie', 'Rebekah', 'Jazmine',
   'Stephen', 'Aaron', 'Tom', 'Nick', 'Eugene', 'Brittani', 'MattW', 'Natrice',
-  'Mollie', 'Albert', 'Gillen', 'Steph', 'Trey Carey', '',
+  'Mollie', 'Albert', 'Gillen', 'Steph', '',
 ];
 
 const prefix_sample = ['HH', 'BP'];

@@ -33,6 +33,7 @@ function renderEditSlots(dl) {
   document.getElementById('eslotlist').innerHTML = '';
 
   const tx = micboard.transmitters;
+  
   dl.forEach((e) => {
     let t;
     if (e !== 0) {
@@ -45,7 +46,19 @@ function renderEditSlots(dl) {
     }
     document.getElementById('eslotlist').appendChild(t);
   });
-
+  const members = micboard.pcoMembers;
+  dl.forEach((m) => {
+    let t;
+    if (e !== 0) {
+      t = document.getElementById('column-template').content.cloneNode(true);
+      t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
+      updateViewOnly(t, members[m]);
+    } else {
+      t = document.createElement('div');
+      t.className = 'col-sm';
+    }
+    document.getElementById('eslotlist').appendChild(t);
+  });
   const b = document.getElementById('column-template').content.cloneNode(true);
   b.querySelector('p.name').innerHTML = 'BLANK';
   b.querySelector('.col-sm').classList.add('blank');
@@ -165,14 +178,14 @@ function submitSlotUpdate() {
 }
 
 export function initEditor() {
-  document.getElementById('editorClose').addEventListener('click', () => {
+  $('#editorClose').on('click', () => {
     groupEditToggle();
   });
 
-  document.getElementById('editorSave').addEventListener('click', () => {
+  $('#editorSave').on('click', () => {
     submitSlotUpdate();
   });
-  document.getElementById('editorClear').addEventListener('click', () => {
+  $('#editorClear').on('click', () => {
     clearAll();
   });
 }

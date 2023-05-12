@@ -1,7 +1,4 @@
 /* @import '/node_modules/@ibm/plex/css/ibm-plex.css'; */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
-
-
 
 html,body {
   background-color: var(--color-background);
@@ -18,7 +15,6 @@ html,body {
 .col-sm {
   color: var(--color-white);
   border: 0px;
-  position: relative;
   // flex-grow: unset;
   // background-color: var(--color-black);
 }
@@ -59,10 +55,11 @@ html,body {
 
 
 .name{
-  //font-family: 'IBM Plex Sans';
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  font-style: bold;
+  font-family: 'IBM Plex Sans';
+  font-weight: 800;
+  text-shadow: RGB(0 0 0 / 61%) 2px 2px 10px;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 
@@ -147,16 +144,6 @@ canvas.slotgraph {
   color: var(--color-green);
 }
 
-
-.powerlock{
-  display: none;
-  position: absolute;
-  bottom: 15px;
-  left: 5px;
-  // color: #587B7F;
-  color: #DA8F4A;
-  // color: var(--color-yellow-dark);
-}
 
 .quality {
   position: absolute;
@@ -252,7 +239,7 @@ canvas.slotgraph {
   font-weight: 300;
 }
 
-.editzone .row {
+.editzone .form-row {
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -265,8 +252,8 @@ canvas.slotgraph {
   display: block;
 }
 
-#save-box .row,
-#paste-box .row {
+#save-box .form-row,
+#paste-box .form-row {
   padding-top: 15px;
 }
 
@@ -302,6 +289,16 @@ canvas.slotgraph {
 
   .above-mid {
     height: 100%;
+  }
+
+  .mic_name.UNASSIGNED {
+
+    .name {
+      writing-mode: vertical-lr;
+      text-orientation: upright;
+      font-size: 40pt;
+      font-weight: 900;
+  }
   }
 
   .name {
@@ -430,19 +427,18 @@ canvas.slotgraph {
   .mic_id {
     display: inline;
     font-weight: 400;
-    font-size: 18pt;
+    font-size: 14pt;
     text-align: left;
     padding-left: 1em;
   }
 
   .name {
     float: right;
-    font-size: 12pt;
+    font-size: 16pt;
     display: inline;
     font-weight: 400;
     padding-right: 1em;
     text-align: right;
-    font-size: 18pt;
     margin: 0px;
   }
 
@@ -468,11 +464,6 @@ canvas.slotgraph {
   .runtime {
     bottom: 75px;
     left: 5px;
-  }
-
-  .powerlock {
-    bottom: 3px;
-    left: 1px;
   }
 
   .quality {
@@ -659,12 +650,12 @@ canvas.slotgraph {
   padding-top: 4em;
 }
 
-.message-board {
+.message-board{
   display: none;
   background-color: var(--color-blue);
   color: var(--color-white);
-  padding-left: 50px !important;
-  padding-top: 75px !important;
+  margin-left: -15px;
+  margin-right: -15px;
   padding: 3em;
 }
 
@@ -686,8 +677,8 @@ canvas.slotgraph {
   background-color: var(--color-black);
   padding: .75rem 1.25rem;
   border: 1px solid var(--color-gray);
-  // margin-left: -5px;
-  // margin-right: -5px;
+  margin-left: -5px;
+  margin-right: -5px;
   border-radius: 12px 12px 0 0;
 }
 
@@ -700,8 +691,8 @@ canvas.slotgraph {
   background-color: var(--color-black);
   padding: .75rem 1.25rem;
   border: 1px solid var(--color-gray);
-  // margin-left: -5px;
-  // margin-right: -5px;
+  margin-left: -5px;
+  margin-right: -5px;
   border-radius: 0 0 12px 12px;
 }
 
@@ -827,7 +818,7 @@ a:link, a:visited, a:hover, a:active {
 
 #eslotlist {
   height: 400px;
-  // overflow-y: scroll;
+  overflow: scroll;
 }
 
 #eslotlist .col-sm {
@@ -871,7 +862,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 #hud {
-  // display: none;
+  display: none;
   position: absolute;
   right: 25px;
   bottom: 25px;

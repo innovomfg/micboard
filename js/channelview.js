@@ -6,41 +6,40 @@ import { initChart, charts } from './chart-smoothie.js';
 import { seedTransmitters, autoRandom } from './demodata.js';
 import { updateEditor } from './dnd.js';
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function allSlots() {
+  sleep(3000);
   const slot = micboard.config.slots;
-  const out = [];
+    const out = [];
 
-  if (micboard.url.demo) {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  }
+    if (micboard.url.demo) {
+      return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    }
 
-  for (let i = 0; i < slot.length; i += 1) {
-    out.push(slot[i].slot);
-  }
-  return out;
+    for (let i = 0; i < slot.length; i += 1) {
+      out.push(slot[i].slot);
+    }
+  ;
+    return out;
+
 }
 
 
 // enables info-drawer toggle for mobile clients
 function infoToggle() {
-  const cols = document.getElementsByClassName('col-sm')
-  Array.from(cols).forEach((element) => {
-    element.addEventListener('click', (e) => {
-      if (window.innerWidth <= 980 && micboard.settingsMode !== 'EXTENDED') {
-        const id = e.currentTarget.querySelector('.info-drawer')
-        if (id.style.display == 'none' || id.style.display == '') {
-          id.style.display = 'block';
-        } else if (id.style.display == 'block' ){
-          id.style.display = 'none'
-        }
-      }
-    })
-  })
+  $('.col-sm').click((e) => {
+    if ($(window).width() <= 980 && micboard.settingsMode !== 'EXTENDED') {
+      $(e.currentTarget).find('.info-drawer').toggle();
+    }
+  });
 
   if (micboard.group === 0) {
-    document.getElementById('go-groupedit').style.display = 'none'
+    $('#go-groupedit').hide();
   } else if (micboard.group !== 0) {
-    document.getElementById('go-groupedit').style.display = 'block'
+    $('#go-groupedit').show();
   }
 }
 
@@ -55,16 +54,6 @@ function updateTXOffset(slotSelector, data) {
 
 function updateRuntime(slotSelector, data) {
   slotSelector.querySelector('p.runtime').innerHTML = data.runtime;
-}
-
-function updatePowerlock(slotSelector, data) {
-  if (data.power_lock === 'ON') {
-    slotSelector.querySelector('p.powerlock').style.display = 'block';
-  } else {
-    slotSelector.querySelector('p.powerlock').style.display = 'none';
-  }
-
-
 }
 
 function updateQuality(slotSelector, data) {
@@ -196,13 +185,29 @@ function updateCheck(data, key, callback) {
   }
 }
 
+function updatePCOCheck(data, key, callback) {
+  if (key in data) {
+    let newIndex
+    newIndex = data.slot-1
+    if (micboard.pcoMembers[newIndex][key] !== data[key]) {
+      if (callback) {
+        callback();
+      }
+      micboard.pcoMembers[newIndex][key] = data[key];
+    }
+  }
+}
+
+function updateSelectorPCO(slotSelector, data) {
+  updatePCOCheck(data, 'name', () => {
+    updateName(slotSelector, data);
+  });
+}
+
 
 function updateSelector(slotSelector, data) {
   updateCheck(data, 'id', () => {
     updateID(slotSelector, data);
-  });
-  updateCheck(data, 'name', () => {
-    updateName(slotSelector, data);
   });
   updateCheck(data, 'name_raw');
   updateCheck(data, 'status', () => {
@@ -225,9 +230,6 @@ function updateSelector(slotSelector, data) {
   });
   updateCheck(data, 'frequency', () => {
     updateFrequency(slotSelector, data);
-  });
-  updateCheck(data, 'power_lock', () => {
-    updatePowerlock(slotSelector, data);
   });
 }
 
@@ -263,9 +265,6 @@ export function updateViewOnly(slotSelector, data) {
   if ('ip' in data) {
     updateIP(slotSelector, data);
   }
-  if ('power_lock' in data) {
-    updatePowerlock(slotSelector, data);
-  }
 }
 
 export function updateSlot(data) {
@@ -283,42 +282,19 @@ export function updateSlot(data) {
   }
 }
 
-export function renderDisplayList(dl) {
-  console.log('DL :');
-  console.log(dl);
-  document.getElementById('micboard').innerHTML = '';
+export function updateSlotPCO(data) {
 
-  if (micboard.url.demo) {
-    seedTransmitters(dl);
-    autoRandom();
+  const slot = 'slot-' + data.slot;
+  const slotSelector = document.getElementById(slot);
+  if (slotSelector) {
+    updateSelectorPCO(slotSelector, data);
   }
-
-  const tx = micboard.transmitters;
-  dl.forEach((e) => {
-    let t;
-    if (e !== 0) {
-      if (typeof tx[e] !== 'undefined') {
-        t = document.getElementById('column-template').content.cloneNode(true);
-        t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
-        updateViewOnly(t, tx[e]);
-        charts[tx[e].slot] = initChart(t, tx[e]);
-        document.getElementById('micboard').appendChild(t);
-      }
-    } else {
-      t = document.getElementById('column-template').content.cloneNode(true);
-      t.querySelector('p.name').innerHTML = 'BLANK';
-      t.querySelector('.col-sm').classList.add('blank');
-      document.getElementById('micboard').appendChild(t);
-    }
-  });
-
-  infoToggle();
 }
 
 export function renderGroup(group) {
   if (micboard.settingsMode === 'CONFIG') {
-    document.getElementById('micboard').style.display = 'grid'
-    document.getElementsByClassName('settings')[0].style.display = 'none'
+    $('#micboard').show();
+    $('.settings').hide();
   }
   micboard.group = group;
   updateHash();
@@ -339,3 +315,46 @@ export function renderGroup(group) {
     updateEditor(group);
   }
 }
+
+export function renderDisplayList(dl) {
+  console.log('DL :');
+  console.log(dl);
+  document.getElementById('micboard').innerHTML = '';
+
+  if (micboard.url.demo) {
+    seedTransmitters(dl);
+    autoRandom();
+  }
+
+  const tx = micboard.transmitters;
+  dl.forEach((e) => {
+    let t;
+    if (e !== 0) {
+      t = document.getElementById('column-template').content.cloneNode(true);
+      t.querySelector('div.col-sm').id = 'slot-' + tx[e].slot;
+      updateViewOnly(t, tx[e]);
+      charts[tx[e].slot] = initChart(t, tx[e]);
+    } else {
+      t = document.getElementById('column-template').content.cloneNode(true);
+      t.querySelector('p.name').innerHTML = 'BLANK';
+      t.querySelector('.col-sm').classList.add('blank');
+    }
+    document.getElementById('micboard').appendChild(t);
+  });
+
+  const members = micboard.pcoMembers;
+  var memlength = members.length + 1;
+  
+  members.forEach((m) => {
+    let t;
+    if (m.slot !== 0)   {
+      const slot = 'slot-' + m.slot;
+      const slotSelector = document.getElementById(slot);
+      t = slotSelector
+      updateViewOnly(t, m);
+    };
+
+  infoToggle();
+  });
+}
+

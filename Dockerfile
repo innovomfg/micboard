@@ -1,20 +1,23 @@
-# syntax=docker/dockerfile:1
-FROM node:17-alpine AS micboard_frontend
-WORKDIR /home/node/app
-COPY . .
-RUN npm install
-RUN npm run build
+FROM python:3
 
-FROM python:3-alpine as micboard_server
-
-LABEL org.opencontainers.image.authors="karl@micboard.io"
+MAINTAINER Karl Swanson <karlcswanson@gmail.com>
 
 WORKDIR /usr/src/app
 
-COPY . .
-COPY --from=micboard_frontend /home/node/app/static /usr/src/app/static/
+ENV TZ=America/Chicago
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN pip3 install -r py/requirements.txt
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get clean && apt-get update
+RUN apt-get install nodejs npm -y
+
+COPY . .
+
+RUN python3 -m pip install -r py/requirements.txt
+RUN npm config set pyhton=python3
+
+RUN npm install --only=prod
+RUN npm run build
 
 EXPOSE 8058
 

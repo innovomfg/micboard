@@ -1,6 +1,5 @@
 'use strict';
 
-import { Collapse, Modal } from 'bootstrap'
 import { micboard, updateHash, generateQR } from './app.js';
 import { toggleInfoDrawer, toggleImageBackground, toggleVideoBackground, toggleDisplayMode } from './display';
 import { renderGroup } from './channelview.js';
@@ -18,35 +17,25 @@ function toggleFullScreen() {
   }
 }
 
-
-function activeDiv(querySelector) {
-  const div = document.querySelector(querySelector)
-  if (div) {
-    if (window.getComputedStyle(div).getPropertyValue('display') === "block") {
-      return true
-    }
-  }
-  return false
-}
-
-
 export function keybindings() {
+  $('#hud-button').click( function() {
+    $('#hud').hide();
+  });
+
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       micboard.settingsMode = 'NONE';
       updateHash();
       window.location.reload();
     }
-
-    if (activeDiv('.settings')) {
+    if ($('.settings').is(':visible')) {
       return;
     }
-
-    if (activeDiv('.editzone')) {
+    if ($('.editzone').is(':visible')) {
       return;
     }
-
-    if (activeDiv('.sidebar-nav')) {
+    if ($('.sidebar-nav').is(':visible')) {
       return;
     }
 
@@ -111,7 +100,7 @@ export function keybindings() {
 
     if (e.key === 'N') {
       slotEditToggle();
-      document.getElementById('paste-box').style.display = "block"
+      $('#paste-box').show();
     }
 
     if (e.key === 's') {
@@ -120,8 +109,7 @@ export function keybindings() {
 
     if (e.key === 'q') {
       generateQR();
-      const qrMod = Modal.getOrCreateInstance('#qr-modal')
-      qrMod.toggle()
+      $('.modal').modal('toggle');
     }
 
     if (e.key === 't') {
@@ -133,7 +121,7 @@ export function keybindings() {
     }
 
     if (e.key === '?') {
-      new Collapse(document.getElementById('hud'), { toggle: true} )
+      $('#hud').toggle();
     }
   }, false);
 }

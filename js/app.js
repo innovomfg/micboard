@@ -1,13 +1,13 @@
 "use strict";
 
-import { Collapse } from 'bootstrap';
+import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import QRCode from 'qrcode';
 import 'whatwg-fetch';
 
 import { autoRandom, seedTransmitters } from './demodata.js';
 import { renderGroup, renderDisplayList, updateSlot } from './channelview.js';
-import { initLiveData } from './data.js';
+import { initLiveData, initLiveDataPCO } from './data.js';
 import { groupEditToggle, initEditor } from './dnd.js';
 import { slotEditToggle } from './extended.js';
 import { keybindings } from './kbd.js';
@@ -17,10 +17,11 @@ import { initConfigEditor } from './config.js';
 
 import '../css/colors.scss';
 import '../css/style.scss';
-import '../node_modules/@ibm/plex/scss/ibm-plex.scss';
+import '../node_modules/@ibm/plex/css/ibm-plex.css';
 
 
 export const dataURL = 'data.json';
+export const pcoURL = 'pco.json';
 
 export const micboard = [];
 micboard.MIC_MODELS = ['uhfr', 'qlxd', 'ulxd', 'axtd'];
@@ -39,19 +40,23 @@ micboard.transmitters = [];
 
 micboard.displayList = [];
 
+micboard.pcoMembers = [];
+
+micboard.pcoPlan = [];
+
 export function ActivateMessageBoard(h1, p) {
   if (!h1) {
     h1 = 'Connection Error!';
     p = 'Could not connect to the micboard server. Please <a href=".">refresh</a> the page.';
   }
 
-  document.getElementById('micboard').style.display = 'none'
-  document.getElementsByClassName('settings')[0].style.display = 'none';
+  $('#micboard').hide();
+  $('.settings').hide();
   const eb = document.getElementsByClassName('message-board')[0];
   eb.querySelector('h1').innerHTML = h1;
   eb.querySelector('p').innerHTML = p;
 
-  document.getElementsByClassName('message-board')[0].style.display = 'block'
+  $('.message-board').show();
 
   micboard.connectionStatus = 'DISCONNECTED';
 }
@@ -107,38 +112,29 @@ export function updateNavLinks() {
 }
 
 function mapGroups() {
-  const navbar = document.getElementById('navbarToggleExternalContent')
-  const help = document.getElementById('hud')
-  document.getElementById('go-hud').addEventListener('click', () => {
-    if (!document.getElementById('hud').classList.contains('show')) {
-      new Collapse(help, {toggle: true})
-    }
-    new Collapse(navbar, { hide: true })
-  })
-
-  document.getElementById('go-extended').addEventListener('click', () => {
+  $('a#go-extended').click(() => {
     slotEditToggle();
-    new Collapse(navbar, { hide: true })
-  })
-
-  document.getElementById('go-config').addEventListener('click', () => {
-    initConfigEditor();
-    new Collapse(navbar, { hide: true })
+    $('.collapse').collapse('hide');
   });
 
-  document.getElementById('go-groupedit').addEventListener('click', () => {
+  $('a#go-config').click(() => {
+    initConfigEditor();
+    $('.collapse').collapse('hide');
+  });
+
+  $('a#go-groupedit').click(() => {
     if (micboard.group !== 0) {
       groupEditToggle();
-      new Collapse(navbar, { hide: true })
+      $('.collapse').collapse('hide');
     }
   });
 
-  const preset_links = document.getElementsByClassName('preset-link')
-  Array.from(preset_links).forEach((element) => {
-    element.addEventListener('click', (e) => {
-      const target = parseInt(e.target.id[9], 10)
-      renderGroup(target)
-      new Collapse(navbar, {hide: true })
+  $('a.preset-link').each(function(index) {
+    const id = parseInt($(this).attr('id')[9], 10);
+
+    $(this).click(() => {
+      renderGroup(id);
+      $('.collapse').collapse('hide');
     });
   });
 
@@ -243,7 +239,7 @@ function initialMap(callback) {
         if (micboard.url.demo !== 'true') {
           dataFilterFromList(data);
         }
-        displayListChooser();
+        
 
         if (callback) {
           callback();
@@ -255,23 +251,56 @@ function initialMap(callback) {
           setInfoDrawer(micboard.url.tvmode);
         }
         initEditor();
+
+        fetch(pcoURL)
+        .then((response) => {
+          setTimeMode(response.headers.get('Date'));
+          console.log('Initiating PCO Data');
+          response.json().then((pcodata) => {
+            micboard.pcoMembers = pcodata.scheduled_members;
+            setTimeout(displayListChooser(), 500);
+            
+            if (callback) {
+              callback();
+            }
+          });
+        });
+
+      });
+    });
+      
+  //  initialMapPCO(initLiveDataPCO);
+  }
+
+export function initialMapPCO(callback) {
+  fetch(pcoURL)
+    .then((response) => {
+      setTimeMode(response.headers.get('Date'));
+      console.log('Initiating PCO Data');
+      response.json().then((pcodata) => {
+        micboard.pcoMembers = pcodata.scheduled_members;
+        displayListChooser();
+        if (callback) {
+          callback();
+        }
       });
     });
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
   console.log('Starting Micboard version: ' + VERSION);
   readURLParameters();
   keybindings();
   if (micboard.url.demo === 'true') {
     setTimeout(() => {
-      new Collapse(document.getElementById('hud'), { show: true})
+      $('#hud').show();
     }, 100);
 
     initialMap();
+
   } else {
     initialMap(initLiveData);
+
   }
 
   if (micboard.url.settings === 'true') {
