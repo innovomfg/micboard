@@ -108,4 +108,3 @@ def getTeam():
                     pco_update_list.append(newvocal)
 
     return vocals
-
