@@ -8,6 +8,7 @@ Install git, python3-pip, and Node.js
 ```
 $ sudo apt-get update
 $ sudo apt-get install git python3-pip
+$ sudo apt-get install python3-tk
 $ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 $ sudo apt-get install nodejs
 ```
@@ -28,7 +29,6 @@ $ pip3 install -r py/requirements.txt
 build the micboard frontend and run micboard
 ```
 $ npm run build
-$ sudo apt-get install python3-tk
 $ python3 py/micboard.py
 ```
 

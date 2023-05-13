@@ -269,7 +269,7 @@ function initialMap(callback) {
       });
     });
       
-  //  initialMapPCO(initLiveDataPCO);
+  initialMapPCO(initLiveDataPCO);
   }
 
 export function initialMapPCO(callback) {
