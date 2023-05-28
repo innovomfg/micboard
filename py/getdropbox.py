@@ -163,9 +163,9 @@ def filehash(fn):
 
 def getFiles():
     # read access token
-    access_token = 'q5LRDXfLpZIAAAAAAAAAATgpXulREK_9-r0JziSLDC2loJXZ436uzHuYnJ0_RaRc'
-    key = 'hvrbiv1pyu00ih0'
-    secret = 'wncwvelsz3yfvhu'
+    access_token = 'sl.BfPh6aLX3iKe-uyZxhMBM0Aiy2bJkf3viDmO3K5sZ2pOYVS5qM5FVxshydrE2EBgc2oKb9VmRYWqWpS952hw6jAPEOEI6-KcCPctoq14xTR4cFPlm_4DrXIjQG8Dphi1t81j0-Y'
+    key = 'jcxx2rsffmpxws9'
+    secret = 'e2w2jnn30onq65i'
     localdirectory = config2.gif_dir
     # Authenticate with Dropbox
     print('Downloading images from Dropbox...')
